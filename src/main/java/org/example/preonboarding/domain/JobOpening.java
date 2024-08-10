@@ -39,11 +39,11 @@ public class JobOpening {
         this.signingBonus = signingBonus;
     }
 
-    public void updateJobPosting(UpdateJobOpeningRequest updateJobPostingRequest) {
-        this.jobPosition = updateJobPostingRequest.getJobPosition();
-        this.signingBonus = updateJobPostingRequest.getSigningBonus();
-        this.jobDescription = updateJobPostingRequest.getJobDescription();
-        this.techStack = updateJobPostingRequest.getTechStack();
+    public void updateJobOpening(UpdateJobOpeningRequest updateJobOpeningRequest) {
+        this.jobPosition = updateJobOpeningRequest.getJobPosition();
+        this.signingBonus = updateJobOpeningRequest.getSigningBonus();
+        this.jobDescription = updateJobOpeningRequest.getJobDescription();
+        this.techStack = updateJobOpeningRequest.getTechStack();
     }
 
 }

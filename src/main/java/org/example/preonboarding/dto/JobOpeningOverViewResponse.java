@@ -17,15 +17,15 @@ public class JobOpeningOverViewResponse {
     private int signingBonus;
     private String techStack;
 
-    public static JobOpeningOverViewResponse from(JobOpening jobPosting, Company company) {
+    public static JobOpeningOverViewResponse from(JobOpening jobOpening, Company company) {
         return JobOpeningOverViewResponse.builder()
-                .jobOpeningId(jobPosting.getId())
+                .jobOpeningId(jobOpening.getId())
                 .companyName(company.getName())
                 .country(company.getCountry())
                 .region(company.getRegion())
-                .jobPosition(jobPosting.getJobPosition())
-                .signingBonus(jobPosting.getSigningBonus())
-                .techStack(jobPosting.getTechStack())
+                .jobPosition(jobOpening.getJobPosition())
+                .signingBonus(jobOpening.getSigningBonus())
+                .techStack(jobOpening.getTechStack())
                 .build();
     }
 

@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,5 +20,12 @@ public class Apply {
 
     private Long userId;
 
-    private Long jobPostingId;
+    private Long jobOpeningId;
+
+    @Builder
+    public Apply(Long userId, Long jobOpeningId) {
+        this.userId = userId;
+        this.jobOpeningId = jobOpeningId;
+    }
+
 }

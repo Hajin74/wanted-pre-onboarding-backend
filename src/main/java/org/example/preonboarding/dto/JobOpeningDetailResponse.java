@@ -19,19 +19,19 @@ public class JobOpeningDetailResponse {
     private int signingBonus;
     private String techStack;
     private String jobDescription;
-    private List<Long> otherJobPostingIdsByCompany;
+    private List<Long> otherJobOpeningIdsByCompany;
 
-    public static JobOpeningDetailResponse from(JobOpening jobPosting, Company company, List<Long> otherJobPostingIdsByCompany) {
+    public static JobOpeningDetailResponse from(JobOpening jobOpening, Company company, List<Long> otherJobOpeningIdsByCompany) {
         return JobOpeningDetailResponse.builder()
-                .jobOpeningId(jobPosting.getId())
+                .jobOpeningId(jobOpening.getId())
                 .companyName(company.getName())
                 .country(company.getCountry())
                 .region(company.getRegion())
-                .jobPosition(jobPosting.getJobPosition())
-                .signingBonus(jobPosting.getSigningBonus())
-                .techStack(jobPosting.getTechStack())
-                .jobDescription(jobPosting.getJobDescription())
-                .otherJobPostingIdsByCompany(otherJobPostingIdsByCompany)
+                .jobPosition(jobOpening.getJobPosition())
+                .signingBonus(jobOpening.getSigningBonus())
+                .techStack(jobOpening.getTechStack())
+                .jobDescription(jobOpening.getJobDescription())
+                .otherJobOpeningIdsByCompany(otherJobOpeningIdsByCompany)
                 .build();
     }
 
