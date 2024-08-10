@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.preonboarding.domain.Company;
 import org.example.preonboarding.domain.JobOpening;
 import org.example.preonboarding.dto.*;
+import org.example.preonboarding.exception.CustomException;
+import org.example.preonboarding.exception.ErrorCode;
 import org.example.preonboarding.repository.CompanyRepository;
 import org.example.preonboarding.repository.JobOpeningRepository;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,7 @@ public class JobOpeningService {
     public void createJobOpening(CreateJobOpeningRequest createJobOpeningRequest) {
         boolean isExistedCompany = companyRepository.existsById(createJobOpeningRequest.getCompanyId());
         if (!isExistedCompany) {
-            return;
-            // todo : 예외 던지기
+            throw new CustomException(ErrorCode.COMPANY_NOT_FOUND);
         }
 
         JobOpening jobOpening = JobOpening.builder()
@@ -39,16 +40,11 @@ public class JobOpeningService {
 
     @Transactional
     public void updateJobOpening(Long jobOpeningId, Long companyId, UpdateJobOpeningRequest updateJobOpeningRequest) {
-        JobOpening targetJobOpening = jobOpeningRepository.findById(jobOpeningId).orElse(null);
-
-        if (targetJobOpening == null) {
-            // todo: null이면 예외 던지기
-            return;
-        }
+        JobOpening targetJobOpening = jobOpeningRepository.findById(jobOpeningId)
+                .orElseThrow(() -> new CustomException(ErrorCode.JOB_OPENING_NOT_FOUND));
 
         if (!targetJobOpening.getCompanyId().equals(companyId)) {
-            // todo: 수정하려는 공고의 회사가, 접근 회사와 동일한지 확인
-            return;
+            throw new CustomException(ErrorCode.INVALID_COMPANY_ACCESS);
         }
 
         targetJobOpening.updateJobOpening(updateJobOpeningRequest);
@@ -56,16 +52,11 @@ public class JobOpeningService {
 
     @Transactional
     public void deleteJobOpening(Long jobOpeningId, Long companyId) {
-        JobOpening targetJobOpening = jobOpeningRepository.findById(jobOpeningId).orElse(null);
-
-        if (targetJobOpening == null) {
-            // todo: null이면 예외 던지기
-            return;
-        }
+        JobOpening targetJobOpening = jobOpeningRepository.findById(jobOpeningId)
+                .orElseThrow(() -> new CustomException(ErrorCode.JOB_OPENING_NOT_FOUND));
 
         if (!targetJobOpening.getCompanyId().equals(companyId)) {
-            // todo: 삭제하려는 공고의 회사가, 접근 회사와 동일한지 확인
-            return;
+            throw new CustomException(ErrorCode.INVALID_COMPANY_ACCESS);
         }
 
         jobOpeningRepository.delete(targetJobOpening);
@@ -76,11 +67,8 @@ public class JobOpeningService {
         List<JobOpeningOverViewResponse> allJobOpening =  new ArrayList<>();
         List<JobOpening> jobOpenings = jobOpeningRepository.findAll();
         for (JobOpening jobOpening : jobOpenings) {
-            Company company = companyRepository.findById(jobOpening.getCompanyId()).orElse(null);
-            if (company == null) {
-                // todo: 예외 처리하기
-                break;
-            }
+            Company company = companyRepository.findById(jobOpening.getCompanyId())
+                    .orElseThrow(() -> new CustomException(ErrorCode.COMPANY_NOT_FOUND));
 
             JobOpeningOverViewResponse jobOpeningItem = JobOpeningOverViewResponse.from(jobOpening, company);
             allJobOpening.add(jobOpeningItem);
@@ -90,17 +78,11 @@ public class JobOpeningService {
 
     @Transactional(readOnly = true)
     public JobOpeningDetailResponse getDetailJobOpening(Long jobOpeningId) {
-        JobOpening targetJobOpening = jobOpeningRepository.findById(jobOpeningId).orElse(null);
-        if (targetJobOpening == null) {
-            // todo: 예외 처리하기
-            return null;
-        }
+        JobOpening targetJobOpening = jobOpeningRepository.findById(jobOpeningId)
+                .orElseThrow(() -> new CustomException(ErrorCode.JOB_OPENING_NOT_FOUND));
 
-        Company company = companyRepository.findById(targetJobOpening.getCompanyId()).orElse(null);
-        if (company == null) {
-            // todo: 예외 처리하기
-            return null;
-        }
+        Company company = companyRepository.findById(targetJobOpening.getCompanyId())
+                .orElseThrow(() -> new CustomException(ErrorCode.COMPANY_NOT_FOUND));
 
         List<Long> otherJobOpeningIdsByCompany = jobOpeningRepository.findByCompanyId(targetJobOpening.getCompanyId())
                 .stream()
