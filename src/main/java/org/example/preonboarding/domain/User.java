@@ -3,7 +3,6 @@ package org.example.preonboarding.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.preonboarding.enums.UserRole;
 
 @Entity
 @Table(name="users")
@@ -20,7 +19,5 @@ public class User {
     private String password;
 
     private String name;
-
-    private UserRole role;
 
 }
