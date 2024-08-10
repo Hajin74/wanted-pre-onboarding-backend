@@ -84,7 +84,7 @@
         "data": null
     }
 
-### 3. 채용 공고 삭제하기
+### 4. 채용 공고 삭제하기
 
 - **URL**: `/api/job-opening/{jobOpeningId}/company/{companyId}`
 - **Method**: `DELETE`
@@ -101,7 +101,7 @@
         "data": null
     }
 
-### 4. 채용 목록 조회하기
+### 5. 채용 목록 조회하기
 
 - **URL**: `/api/job-opening`
 - **Method**: `GET`
@@ -142,7 +142,7 @@
     - `signingBonus (int)`: 채용 보상금
     - `techStack (String)`: 사용 기술
 
-### 5. 채용 공고 상세 조회
+### 6. 채용 공고 상세 조회
 
 - **URL**: `/api/job-opening/{jobOpeningId}`
 - **Method**: `GET`
