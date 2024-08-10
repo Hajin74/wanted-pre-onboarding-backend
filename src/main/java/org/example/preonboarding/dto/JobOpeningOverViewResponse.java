@@ -3,13 +3,13 @@ package org.example.preonboarding.dto;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.preonboarding.domain.Company;
-import org.example.preonboarding.domain.JobPosting;
+import org.example.preonboarding.domain.JobOpening;
 
 @Getter
 @Builder
-public class JobPostingOverViewResponse {
+public class JobOpeningOverViewResponse {
 
-    private Long jobPostingId;
+    private Long jobOpeningId;
     private String companyName;
     private String country;
     private String region;
@@ -17,15 +17,15 @@ public class JobPostingOverViewResponse {
     private int signingBonus;
     private String techStack;
 
-    public static JobPostingOverViewResponse from(JobPosting jobPosting, Company company) {
-        return JobPostingOverViewResponse.builder()
-                .jobPostingId(jobPosting.getId())
+    public static JobOpeningOverViewResponse from(JobOpening jobOpening, Company company) {
+        return JobOpeningOverViewResponse.builder()
+                .jobOpeningId(jobOpening.getId())
                 .companyName(company.getName())
                 .country(company.getCountry())
                 .region(company.getRegion())
-                .jobPosition(jobPosting.getJobPosition())
-                .signingBonus(jobPosting.getSigningBonus())
-                .techStack(jobPosting.getTechStack())
+                .jobPosition(jobOpening.getJobPosition())
+                .signingBonus(jobOpening.getSigningBonus())
+                .techStack(jobOpening.getTechStack())
                 .build();
     }
 

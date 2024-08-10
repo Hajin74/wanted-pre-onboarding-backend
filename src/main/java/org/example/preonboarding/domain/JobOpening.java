@@ -4,15 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.preonboarding.dto.UpdateJobPostingRequest;
+import org.example.preonboarding.dto.UpdateJobOpeningRequest;
 
 @Entity
 @Getter
-@NoArgsConstructor
-public class JobPosting {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class JobOpening {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +29,9 @@ public class JobPosting {
 
     private int signingBonus;
 
+
     @Builder
-    public JobPosting(Long companyId, String jobPosition, String techStack, String jobDescription, int signingBonus) {
+    public JobOpening(Long companyId, String jobPosition, String techStack, String jobDescription, int signingBonus) {
         this.companyId = companyId;
         this.jobPosition = jobPosition;
         this.techStack = techStack;
@@ -37,11 +39,11 @@ public class JobPosting {
         this.signingBonus = signingBonus;
     }
 
-    public void updateJobPosting(UpdateJobPostingRequest updateJobPostingRequest) {
-        this.jobPosition = updateJobPostingRequest.getJobPosition();
-        this.signingBonus = updateJobPostingRequest.getSigningBonus();
-        this.jobDescription = updateJobPostingRequest.getJobDescription();
-        this.techStack = updateJobPostingRequest.getTechStack();
+    public void updateJobOpening(UpdateJobOpeningRequest updateJobOpeningRequest) {
+        this.jobPosition = updateJobOpeningRequest.getJobPosition();
+        this.signingBonus = updateJobOpeningRequest.getSigningBonus();
+        this.jobDescription = updateJobOpeningRequest.getJobDescription();
+        this.techStack = updateJobOpeningRequest.getTechStack();
     }
 
 }
