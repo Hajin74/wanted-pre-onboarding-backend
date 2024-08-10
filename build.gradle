@@ -37,6 +37,7 @@ dependencies {
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
 
     // mysql
     runtimeOnly 'com.mysql:mysql-connector-j'
