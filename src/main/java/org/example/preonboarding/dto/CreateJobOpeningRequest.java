@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CreateJobPostingRequest {
+public class CreateJobOpeningRequest {
 
     @NotNull(message = "회사 아이디는 필수 입력 값입니다.")
     private Long companyId;

@@ -2,11 +2,11 @@ package org.example.preonboarding.ui;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.preonboarding.dto.CreateJobPostingRequest;
-import org.example.preonboarding.dto.JobPostingDetailResponse;
-import org.example.preonboarding.dto.JobPostingOverViewResponse;
-import org.example.preonboarding.dto.UpdateJobPostingRequest;
-import org.example.preonboarding.service.JobPostingService;
+import org.example.preonboarding.dto.CreateJobOpeningRequest;
+import org.example.preonboarding.dto.JobOpeningDetailResponse;
+import org.example.preonboarding.dto.JobOpeningOverViewResponse;
+import org.example.preonboarding.dto.UpdateJobOpeningRequest;
+import org.example.preonboarding.service.JobOpeningService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,16 +16,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JobPostingController {
 
-    private final JobPostingService jobPostingService;
+    private final JobOpeningService jobPostingService;
 
     @PostMapping
-    public String createJobPosting(@RequestBody @Valid CreateJobPostingRequest createJobPostingRequest) {
+    public String createJobPosting(@RequestBody @Valid CreateJobOpeningRequest createJobPostingRequest) {
         jobPostingService.createJobPosting(createJobPostingRequest);
         return "create success!";
     }
 
     @PutMapping("/{jobPostingId}/company/{companyId}")
-    public String updateJobPosting(@PathVariable Long jobPostingId, @PathVariable Long companyId, @RequestBody @Valid UpdateJobPostingRequest updateJobPostingRequest) {
+    public String updateJobPosting(@PathVariable Long jobPostingId, @PathVariable Long companyId, @RequestBody @Valid UpdateJobOpeningRequest updateJobPostingRequest) {
         jobPostingService.updateJobPosting(jobPostingId, companyId, updateJobPostingRequest);
         return "update success!";
     }
@@ -37,12 +37,12 @@ public class JobPostingController {
     }
 
     @GetMapping
-    public List<JobPostingOverViewResponse> getAllJobPostings() {
+    public List<JobOpeningOverViewResponse> getAllJobPostings() {
         return jobPostingService.getAllJobPostings();
     }
 
     @GetMapping("/{jobPostingId}")
-    public JobPostingDetailResponse getDetailJobPosting(@PathVariable Long jobPostingId) {
+    public JobOpeningDetailResponse getDetailJobPosting(@PathVariable Long jobPostingId) {
         return jobPostingService.getDetailJobPosting(jobPostingId);
     }
 

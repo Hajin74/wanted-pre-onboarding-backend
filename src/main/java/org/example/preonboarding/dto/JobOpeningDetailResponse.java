@@ -3,29 +3,35 @@ package org.example.preonboarding.dto;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.preonboarding.domain.Company;
-import org.example.preonboarding.domain.JobPosting;
+import org.example.preonboarding.domain.JobOpening;
+
+import java.util.List;
 
 @Getter
 @Builder
-public class JobPostingOverViewResponse {
+public class JobOpeningDetailResponse {
 
-    private Long jobPostingId;
+    private Long jobOpeningId;
     private String companyName;
     private String country;
     private String region;
     private String jobPosition;
     private int signingBonus;
     private String techStack;
+    private String jobDescription;
+    private List<Long> otherJobPostingIdsByCompany;
 
-    public static JobPostingOverViewResponse from(JobPosting jobPosting, Company company) {
-        return JobPostingOverViewResponse.builder()
-                .jobPostingId(jobPosting.getId())
+    public static JobOpeningDetailResponse from(JobOpening jobPosting, Company company, List<Long> otherJobPostingIdsByCompany) {
+        return JobOpeningDetailResponse.builder()
+                .jobOpeningId(jobPosting.getId())
                 .companyName(company.getName())
                 .country(company.getCountry())
                 .region(company.getRegion())
                 .jobPosition(jobPosting.getJobPosition())
                 .signingBonus(jobPosting.getSigningBonus())
                 .techStack(jobPosting.getTechStack())
+                .jobDescription(jobPosting.getJobDescription())
+                .otherJobPostingIdsByCompany(otherJobPostingIdsByCompany)
                 .build();
     }
 

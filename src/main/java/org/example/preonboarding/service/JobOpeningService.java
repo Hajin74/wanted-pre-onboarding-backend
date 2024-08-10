@@ -2,10 +2,10 @@ package org.example.preonboarding.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.preonboarding.domain.Company;
-import org.example.preonboarding.domain.JobPosting;
+import org.example.preonboarding.domain.JobOpening;
 import org.example.preonboarding.dto.*;
 import org.example.preonboarding.repository.CompanyRepository;
-import org.example.preonboarding.repository.JobPostingRepository;
+import org.example.preonboarding.repository.JobOpeningRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,20 +14,20 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class JobPostingService {
+public class JobOpeningService {
 
-    private final JobPostingRepository jobPostingRepository;
+    private final JobOpeningRepository jobPostingRepository;
     private final CompanyRepository companyRepository;
 
     @Transactional
-    public void createJobPosting(CreateJobPostingRequest createJobPostingRequest) {
+    public void createJobPosting(CreateJobOpeningRequest createJobPostingRequest) {
         boolean isExistedCompany = companyRepository.existsById(createJobPostingRequest.getCompanyId());
         if (!isExistedCompany) {
             return;
             // todo : 예외 던지기
         }
 
-        JobPosting jobPosting = JobPosting.builder()
+        JobOpening jobPosting = JobOpening.builder()
                 .companyId(createJobPostingRequest.getCompanyId())
                 .jobPosition(createJobPostingRequest.getJobPosition())
                 .signingBonus(createJobPostingRequest.getSigningBonus())
@@ -38,8 +38,8 @@ public class JobPostingService {
     }
 
     @Transactional
-    public void updateJobPosting(Long jobPostingId, Long companyId, UpdateJobPostingRequest updateJobPostingRequest) {
-        JobPosting targetJobPosting = jobPostingRepository.findById(jobPostingId).orElse(null);
+    public void updateJobPosting(Long jobPostingId, Long companyId, UpdateJobOpeningRequest updateJobPostingRequest) {
+        JobOpening targetJobPosting = jobPostingRepository.findById(jobPostingId).orElse(null);
 
         if (targetJobPosting == null) {
             // todo: null이면 예외 던지기
@@ -56,7 +56,7 @@ public class JobPostingService {
 
     @Transactional
     public void deleteJobPosting(Long jobPostingId, Long companyId) {
-        JobPosting targetJobPosting = jobPostingRepository.findById(jobPostingId).orElse(null);
+        JobOpening targetJobPosting = jobPostingRepository.findById(jobPostingId).orElse(null);
 
         if (targetJobPosting == null) {
             // todo: null이면 예외 던지기
@@ -72,25 +72,25 @@ public class JobPostingService {
     }
 
     @Transactional(readOnly = true)
-    public List<JobPostingOverViewResponse> getAllJobPostings() {
-        List<JobPostingOverViewResponse> allJobPosting =  new ArrayList<>();
-        List<JobPosting> jobPostings = jobPostingRepository.findAll();
-        for (JobPosting jobPosting : jobPostings) {
+    public List<JobOpeningOverViewResponse> getAllJobPostings() {
+        List<JobOpeningOverViewResponse> allJobPosting =  new ArrayList<>();
+        List<JobOpening> jobPostings = jobPostingRepository.findAll();
+        for (JobOpening jobPosting : jobPostings) {
             Company company = companyRepository.findById(jobPosting.getCompanyId()).orElse(null);
             if (company == null) {
                 // todo: 예외 처리하기
                 break;
             }
 
-            JobPostingOverViewResponse jobPostingItem = JobPostingOverViewResponse.from(jobPosting, company);
+            JobOpeningOverViewResponse jobPostingItem = JobOpeningOverViewResponse.from(jobPosting, company);
             allJobPosting.add(jobPostingItem);
         }
         return allJobPosting;
     }
 
     @Transactional(readOnly = true)
-    public JobPostingDetailResponse getDetailJobPosting(Long jobPostingId) {
-        JobPosting targetJobPosting = jobPostingRepository.findById(jobPostingId).orElse(null);
+    public JobOpeningDetailResponse getDetailJobPosting(Long jobPostingId) {
+        JobOpening targetJobPosting = jobPostingRepository.findById(jobPostingId).orElse(null);
         if (targetJobPosting == null) {
             // todo: 예외 처리하기
             return null;
@@ -104,11 +104,11 @@ public class JobPostingService {
 
         List<Long> otherJobPostingIdsByCompany = jobPostingRepository.findByCompanyId(targetJobPosting.getCompanyId())
                 .stream()
-                .map(JobPosting::getId)
+                .map(JobOpening::getId)
                 .filter(id -> !id.equals(targetJobPosting.getId()))
                 .toList();
 
-        return JobPostingDetailResponse.from(targetJobPosting, company, otherJobPostingIdsByCompany);
+        return JobOpeningDetailResponse.from(targetJobPosting, company, otherJobPostingIdsByCompany);
     }
 
 }
