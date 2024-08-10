@@ -6,6 +6,8 @@ import org.example.preonboarding.domain.Apply;
 import org.example.preonboarding.domain.JobOpening;
 import org.example.preonboarding.domain.User;
 import org.example.preonboarding.dto.CreateApplyRequest;
+import org.example.preonboarding.exception.CustomException;
+import org.example.preonboarding.exception.ErrorCode;
 import org.example.preonboarding.repository.ApplyRepository;
 import org.example.preonboarding.repository.JobOpeningRepository;
 import org.example.preonboarding.repository.UserRepository;
@@ -23,14 +25,10 @@ public class ApplyService {
 
     @Transactional
     public void applyForJobOpening(CreateApplyRequest createApplyRequest) {
-        JobOpening targetJobOpening = jobOpeningRepository.findById(createApplyRequest.getJobOpeningId()).orElse(null);
-        User applicant = userRepository.findById(createApplyRequest.getUserId()).orElse(null);
-
-        if (targetJobOpening == null || applicant == null) {
-            // todo: 예외 던지기
-            log.info("<applyForJobOpening> 예외던지기");
-            return;
-        }
+        JobOpening targetJobOpening = jobOpeningRepository.findById(createApplyRequest.getJobOpeningId())
+                .orElseThrow(() -> new CustomException(ErrorCode.JOB_OPENING_NOT_FOUND));
+        User applicant = userRepository.findById(createApplyRequest.getUserId())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Apply apply = Apply.builder()
                 .userId(applicant.getId())
