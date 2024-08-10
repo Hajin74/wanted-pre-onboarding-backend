@@ -30,6 +30,11 @@ public class ApplyService {
         User applicant = userRepository.findById(createApplyRequest.getUserId())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
+        boolean isExistedApply = applyRepository.existsByUserIdAndJobOpeningId(applicant.getId(), targetJobOpening.getId());
+        if (isExistedApply) {
+            throw new CustomException(ErrorCode.APPLICATION_ALREADY_EXISTS);
+        }
+
         Apply apply = Apply.builder()
                 .userId(applicant.getId())
                 .jobOpeningId(targetJobOpening.getId())
