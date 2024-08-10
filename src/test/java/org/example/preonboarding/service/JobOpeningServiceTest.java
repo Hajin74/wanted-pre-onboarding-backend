@@ -10,7 +10,6 @@ import org.example.preonboarding.exception.CustomException;
 import org.example.preonboarding.exception.ErrorCode;
 import org.example.preonboarding.repository.CompanyRepository;
 import org.example.preonboarding.repository.JobOpeningRepository;
-import org.example.preonboarding.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,8 +37,6 @@ class JobOpeningServiceTest {
     JobOpeningRepository jobOpeningRepository;
     @Autowired
     CompanyRepository companyRepository;
-    @Autowired
-    UserRepository userRepository;
 
     @BeforeEach
     void init() {
