@@ -1,4 +1,6 @@
-# API 명세서
+# 원티드 프리온보딩 사전과제
+
+## API 명세서
 
 ### 1. 채용 공고에 지원하기
 
@@ -11,7 +13,7 @@
         "jobOpeningId": 1,
         "userId": 123
     }
-- **요청 필드**: 
+- **요청 필드**:
   - `jobOpeningId (Long)`: 지원할 채용 공고의 ID
   - `userId (Long)`: 지원자의 ID
 - **응답**: `ApiResponse` 객체
@@ -38,11 +40,11 @@
         "techStack": "JavaScript, React"
     }
 - **요청 필드**:
-    - `companyId (Long)`: 채용 공고를 등록할 회사의 ID
-    - `jobPosition (String)`: 채용 포지션
-    - `signingBonus (int)`: 채용 보상금
-    - `jobDescription (String)`: 채용 내용
-    - `techStack (String)`: 사용 기술
+  - `companyId (Long)`: 채용 공고를 등록할 회사의 ID
+  - `jobPosition (String)`: 채용 포지션
+  - `signingBonus (int)`: 채용 보상금
+  - `jobDescription (String)`: 채용 내용
+  - `techStack (String)`: 사용 기술
 - **응답**: `ApiResponse` 객체
   ```json
     {
@@ -82,7 +84,7 @@
         "data": null
     }
 
-### 3. 채용 공고 삭제하기
+### 4. 채용 공고 삭제하기
 
 - **URL**: `/api/job-opening/{jobOpeningId}/company/{companyId}`
 - **Method**: `DELETE`
@@ -99,7 +101,7 @@
         "data": null
     }
 
-### 4. 채용 목록 조회하기
+### 5. 채용 목록 조회하기
 
 - **URL**: `/api/job-opening`
 - **Method**: `GET`
@@ -140,7 +142,7 @@
   - `signingBonus (int)`: 채용 보상금
   - `techStack (String)`: 사용 기술
 
-### 5. 채용 공고 상세 조회
+### 6. 채용 공고 상세 조회
 
 - **URL**: `/api/job-opening/{jobOpeningId}`
 - **Method**: `GET`
