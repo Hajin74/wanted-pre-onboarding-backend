@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.preonboarding.dto.CreateJobPostingRequest;
 import org.example.preonboarding.dto.JobPostingDetailResponse;
-import org.example.preonboarding.dto.JobPostingItemResponse;
+import org.example.preonboarding.dto.JobPostingOverViewResponse;
 import org.example.preonboarding.dto.UpdateJobPostingRequest;
 import org.example.preonboarding.service.JobPostingService;
 import org.springframework.web.bind.annotation.*;
@@ -33,12 +33,12 @@ public class JobPostingController {
     @DeleteMapping("/{jobPostingId}/company/{companyId}")
     public String deleteJobPosting(@PathVariable Long jobPostingId, @PathVariable Long companyId) {
         jobPostingService.deleteJobPosting(jobPostingId, companyId);
-        return "delte success!";
+        return "delete success!";
     }
 
     @GetMapping
-    public List<JobPostingItemResponse> getAllJobPosting() {
-        return jobPostingService.getAllJobPosting();
+    public List<JobPostingOverViewResponse> getAllJobPostings() {
+        return jobPostingService.getAllJobPostings();
     }
 
     @GetMapping("/{jobPostingId}")

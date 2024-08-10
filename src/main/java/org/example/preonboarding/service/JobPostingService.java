@@ -72,8 +72,8 @@ public class JobPostingService {
     }
 
     @Transactional(readOnly = true)
-    public List<JobPostingItemResponse> getAllJobPosting() {
-        List<JobPostingItemResponse> allJobPosting =  new ArrayList<>();
+    public List<JobPostingOverViewResponse> getAllJobPostings() {
+        List<JobPostingOverViewResponse> allJobPosting =  new ArrayList<>();
         List<JobPosting> jobPostings = jobPostingRepository.findAll();
         for (JobPosting jobPosting : jobPostings) {
             Company company = companyRepository.findById(jobPosting.getCompanyId()).orElse(null);
@@ -81,9 +81,8 @@ public class JobPostingService {
                 // todo: 예외 처리하기
                 break;
             }
-            CompanyInfo companyInfo = CompanyInfo.from(company);
 
-            JobPostingItemResponse jobPostingItem = JobPostingItemResponse.from(jobPosting, companyInfo);
+            JobPostingOverViewResponse jobPostingItem = JobPostingOverViewResponse.from(jobPosting, company);
             allJobPosting.add(jobPostingItem);
         }
         return allJobPosting;
@@ -102,9 +101,14 @@ public class JobPostingService {
             // todo: 예외 처리하기
             return null;
         }
-        CompanyInfo companyInfo = CompanyInfo.from(company);
 
-        return JobPostingDetailResponse.from(targetJobPosting, companyInfo);
+        List<Long> otherJobPostingIdsByCompany = jobPostingRepository.findByCompanyId(targetJobPosting.getCompanyId())
+                .stream()
+                .map(JobPosting::getId)
+                .filter(id -> !id.equals(targetJobPosting.getId()))
+                .toList();
+
+        return JobPostingDetailResponse.from(targetJobPosting, company, otherJobPostingIdsByCompany);
     }
 
 }
