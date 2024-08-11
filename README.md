@@ -181,3 +181,72 @@
     - `techStack (String)`: 사용 기술
     - `jobDescription (String)`: 채용 내용
     - `otherJobOpeningIdsByCompany (List<Long>)`: 회사의 다른 채용 공고 ID
+
+### 7. 지원서 열람
+
+- **URL**: `/api/apply/review`
+- **Method**: `PATCH`
+- **설명**: 회사가 지원서를 열람합니다.
+- **요청 본문**: `ReviewApplyRequest` 객체
+  ```json
+    {
+        "applyId": "1",
+        "companyId": 1,
+    }
+- **요청 필드**:
+  - `applyId (Long)`: 열람할 지원서 ID
+  - `companyId (Long)`: 해당 공고의 회사의 ID
+- **응답**: `ApiResponse` 객체
+  ```json
+    {
+        "status": "success",
+        "code": "200",
+        "message": "요청이 성공적으로 처리되었습니다.",
+        "data": null
+    }
+
+### 8. 지원 합격
+
+- **URL**: `/api/apply/accept`
+- **Method**: `PATCH`
+- **설명**: 회사가 지원을 합격처리합니다.
+- **요청 본문**: `AcceptApplyRequest` 객체
+  ```json
+    {
+        "applyId": "1",
+        "companyId": 1,
+    }
+- **요청 필드**:
+  - `applyId (Long)`: 합격 처리할 지원서 ID
+  - `companyId (Long)`: 해당 채용 공고의 회사의 ID
+- **응답**: `ApiResponse` 객체
+  ```json
+    {
+        "status": "success",
+        "code": "200",
+        "message": "요청이 성공적으로 처리되었습니다.",
+        "data": null
+    }
+
+### 8. 지원 불합격
+
+- **URL**: `/api/apply/reject`
+- **Method**: `PATCH`
+- **설명**: 회사가 지원을 불합격처리합니다.
+- **요청 본문**: `RejectApplyRequest` 객체
+  ```json
+    {
+        "applyId": "1",
+        "companyId": 1,
+    }
+- **요청 필드**:
+  - `applyId (Long)`: 불합격 처리할 지원서 ID
+  - `companyId (Long)`: 해당 채용 공고의 회사의 ID
+- **응답**: `ApiResponse` 객체
+  ```json
+    {
+        "status": "success",
+        "code": "200",
+        "message": "요청이 성공적으로 처리되었습니다.",
+        "data": null
+    }
