@@ -93,4 +93,18 @@ public class JobOpeningService {
         return JobOpeningDetailResponse.from(targetJobOpening, company, otherJobOpeningIdsByCompany);
     }
 
+    @Transactional(readOnly = true)
+    public List<JobOpeningOverViewResponse> getJobOpeningBySearch(String keyword) {
+        List<JobOpeningOverViewResponse> jobOpeningBySearch =  new ArrayList<>();
+        List<JobOpening> jobOpenings = jobOpeningRepository.findByKeyword(keyword);
+        for (JobOpening jobOpening : jobOpenings) {
+            Company company = companyRepository.findById(jobOpening.getCompanyId())
+                    .orElseThrow(() -> new CustomException(ErrorCode.COMPANY_NOT_FOUND));
+
+            JobOpeningOverViewResponse jobOpeningItem = JobOpeningOverViewResponse.from(jobOpening, company);
+            jobOpeningBySearch.add(jobOpeningItem);
+        }
+        return jobOpeningBySearch;
+    }
+
 }

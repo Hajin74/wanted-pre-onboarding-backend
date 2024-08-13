@@ -364,4 +364,38 @@ class JobOpeningServiceTest {
         assertEquals(otherJobOpening.getId(), otherJobOpeningIds.get(0));
     }
 
+    @Test
+    @DisplayName("채용 공고를 검색합니다.")
+    void get_job_opening_by_search() {
+        // given
+        Company company = new Company("원티드랩", "한국", "서울 송파구");
+        companyRepository.save(company);
+
+        JobOpening jobOpening1 = JobOpening.builder()
+                .companyId(company.getId())
+                .jobPosition("파이썬 개발자 [채용솔루션팀]")
+                .jobDescription("서비스 기능 제공을 위한 REST API 개발")
+                .techStack("FastApi, Flask, Django")
+                .signingBonus(1000000)
+                .build();
+        jobOpeningRepository.save(jobOpening1);
+
+        JobOpening jobOpening2 = JobOpening.builder()
+                .companyId(company.getId())
+                .jobPosition("자바 개발자")
+                .jobDescription("서비스 기능 제공을 위한 REST API 개발")
+                .techStack("Java")
+                .signingBonus(1000000)
+                .build();
+        jobOpeningRepository.save(jobOpening2);
+
+        // when
+        String keyword = "자바";
+        List<JobOpeningOverViewResponse> jobOpenings = jobOpeningService.getJobOpeningBySearch(keyword);
+
+        // then
+        assertEquals(1, jobOpenings.size());
+        assertEquals(jobOpening2.getId(), jobOpenings.get(0).getJobOpeningId());
+    }
+
 }

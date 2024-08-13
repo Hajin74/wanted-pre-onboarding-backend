@@ -45,4 +45,10 @@ public class JobOpeningController {
         return ApiResponse.success("200", jobOpeningDetail);
     }
 
+    @GetMapping("/keyword/{keyword}")
+    public ApiResponse<List<JobOpeningOverViewResponse>> getJobOpeningBySearch(@PathVariable String keyword) {
+        List<JobOpeningOverViewResponse> jobOpenings = jobOpeningService.getJobOpeningBySearch(keyword);
+        return ApiResponse.success("200", jobOpenings);
+    }
+
 }
