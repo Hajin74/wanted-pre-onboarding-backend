@@ -1,6 +1,6 @@
 # 원티드 프리온보딩 사전과제
 
-- 필수 요구사항과 추가적으로 선택사항(해당 회사가 올린 다른 채용공고, 채용공고 지원, 지원 상태 관리)을 구현했습니다.
+- 필수 요구사항과 추가적으로 선택사항(해당 회사가 올린 다른 채용공고, 채용공고 지원, 채용 공고 검색, 지원 상태 관리)을 구현했습니다.
 
 ## ERD
 <img src="imgs/erd.png" width="500" />
@@ -249,4 +249,39 @@
         "code": "200",
         "message": "요청이 성공적으로 처리되었습니다.",
         "data": null
+    }
+
+### 9. 채용 공고 검색
+
+- **URL**: `/api/job-opening/keyword/{keyword}`
+- **Method**: `GET`
+- **설명**: 채용 공고를 검색합니다.
+- **경로 변수**:
+    - `keyword (String)`: 검색할 키워드
+- **응답**: `ApiResponse` 객체
+  ```json
+    {
+        "status": "SUCCESS",
+        "code": "200",
+        "message": "요청이 성공적으로 처리되었습니다.",
+        "data": [
+          {
+            "jobOpeningId": 1,
+            "companyName": "원티드랩",
+            "country": "한국",
+            "region": "서울 송파구",
+            "jobPosition": "백엔드 개발자",
+            "signingBonus": 500000,
+            "techStack": "django python"
+          },
+          {
+            "jobOpeningId": 2,
+            "companyName": "롯데카드",
+            "country": "한국",
+            "region": "서울 종로구",
+            "jobPosition": "안드로이드 개발자",
+            "signingBonus": 1000000,
+            "techStack": "Kotlin, Coroutine, KTX, Databinding"
+          },
+       ]
     }
